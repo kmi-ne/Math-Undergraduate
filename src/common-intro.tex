@@ -1,0 +1,46 @@
+\newcommand{\intro}[4]{%
+  \chapter*{はじめに}
+  \addcontentsline{toc}{chapter}{はじめに}
+
+  \section*{本稿について}
+
+  本稿『学部数学のための#1』は，編者による学部生向けの数学ノートのシリーズを構成する一稿である．
+
+  シリーズを構成する全てのpdfファイルとその\TeX ソースファイルの最新版は，\href{https://creativecommons.org/licenses/by-nc/4.0/}{CC BY-NC 4.0ライセンス}の下，\href{https://github.com/kmi-ne/Math-Undergraduate/tree/main}{GitHubの該当リポジトリ}で配布されている\footnote{当リポジトリのコラボレーターを随時募っています．また，内容の誤り，タイポ，改善点，その他のご指摘については，\href{https://github.com/kmi-ne/Math-Undergraduate/issues}{issueを立てる}か，何らかの手段で編者までお伝えくださると幸いです．}．
+
+  本稿の\href{https://github.com/kmi-ne/Math-Undergraduate/blob/main/pdf/#2_Undg.pdf}{pdfファイル}とその\href{https://github.com/kmi-ne/Math-Undergraduate/tree/main/src/#2_Undg}{\TeX ソースファイル}の最新版は，この文中のリンク先から入手できる．
+
+  \section*{本稿の目的と内容}
+  #3
+  \section*{前提知識}
+  #4
+  \section*{本稿の書かれ方}
+
+  プログラムのソースコードが，コードそのものとコメントとで構成されているのと同様に，数学書も，数学的内容そのものと，それに対する説明とで構成されていると見ることができる．
+
+  本稿に掲載されている全ての数学的内容は，次のような色付きのボックスに収められている．
+  \begin{thm}
+    $n$が奇数であれば，$n^2$も奇数である．
+  \end{thm}
+  このようなボックスを，本稿では\phantomlabel{item}\xsf{項目}と呼ぶ．本稿は全面的に，項目を列挙するスタイルで書かれている．
+
+  全ての項目には，各々の役割に応じた色が以下のように割り当てられている．
+  \begin{longtable}{lll}
+    \hline
+    {\gs 色} & {\gs 役割} & {\gs 項目名} \\
+    \hline\hline
+    \endfirsthead
+    \endhead
+    \endfoot
+    \hline
+    \endlastfoot
+    \bx{$\mdsmblksquare$ \xsf{青色}} & 定義タイプ & 規約，メタ定義，定義 \\
+    \rx{$\mdsmblksquare$ \xsf{赤色}} & 公理タイプ & 前提，公理，推論規則 \\
+    \gx{$\mdsmblksquare$ \xsf{緑色}} & 定理タイプ & 事実，メタ定理，定理，補題，命題 \\
+    \Gx{$\mdsmblksquare$ \xsf{灰色}} & 非形式的な約束 & 記法，約束
+  \end{longtable}
+
+  一方，数学的内容に対する説明は，色付きボックスに収められない普通の文章として記載される（ただし，特に注意に値するものは，「注意」という黒色破線のボックスに収められている）．このような文章を，本稿では\xsf{説明文}と呼ぶ．説明文は，内容に応じて，項目の前後や，章およびセクションの冒頭などに書かれる．
+
+  重要なのは，これらの説明文は全て項目の理解の補助のために書かれたものであり，\xsf{本稿の内容自体は，項目のみをたどることで完全に完結するように書かれている}という点である．言い換えれば，説明文を読む必要は（あくまで論理的には）一切ない．
+}

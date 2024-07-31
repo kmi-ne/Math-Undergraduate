@@ -1,0 +1,404 @@
+\newcommand{\newbooleanset}[2]{\newbool{#1}\setbool{#1}{#2}}
+\mybools
+
+% 
+% 
+% 
+
+%%%%% ページレイアウト
+% \setpagelayout+{vmargin=10truemm, inner=15truemm, outer=10truemm, includemp, marginparwidth=35truemm}
+\setpagelayout+{vmargin=10truemm, hmargin=10truemm, includemp, nomarginpar}
+% \usepackage{marginnote}
+% \renewcommand*{\marginfont}{\scriptsize}
+
+% 
+% 
+% 
+
+%%%%% フォント／書体
+\ifxetex
+  \setCJKsansfont[BoldFont=HaranoAjiGothic-Bold]{HaranoAjiGothic-Medium}
+  \setCJKmonofont[BoldFont=HaranoAjiGothic-Bold]{HaranoAjiGothic-Medium}
+\else\fi
+\ifluatex
+  \ltjsetparameter{jacharrange={-2,-3}}
+  \setsansjfont[BoldFont=HaranoAjiGothic-Bold]{HaranoAjiGothic-Medium}
+  \setmonojfont[BoldFont=HaranoAjiGothic-Bold]{HaranoAjiGothic-Medium}
+\else\fi
+\PassOptionsToPackage{math-style=ISO, bold-style=upright}{unicode-math}
+\usepackage[olddefault, newcmbb, varnothing]{fontsetup}
+\setmathfont[range={scr, bfscr}, StylisticSet=1]{NewCMMath-Regular}
+\DeclareMathAlphabet{\cl}{OMS}{cmsy}{m}{n} % 旧チャンセリー筆記体
+\setsansfont{nimbussans}
+\usepackage{manfnt}
+\usepackage[old]{old-arrows}
+\ifluatex
+  \usepackage{longmath}
+\else\fi
+\makeatletter
+\AtBeginDocument{
+  \catcode`_=12
+  \begingroup\lccode`~=`_
+  \lowercase{\endgroup\let~}\sb
+  \mathcode`_="8000
+  \immediate\write\@auxout{\catcode`_=12 }
+}
+\makeatother
+\allowdisplaybreaks[4]
+
+% 
+% 
+% 
+
+%%%%% 色
+\usepackage{xcolor}
+\definecolor{mygreen}{HTML}{70b548}
+\definecolor{myblue}{HTML}{6e9ec2}
+\definecolor{myred}{HTML}{c26e7c}
+\definecolor{myyellow}{HTML}{b8ba05}
+\definecolor{mygray}{HTML}{878787}
+\definecolor{myurlcolor}{HTML}{ad0d00}
+\definecolor{mylinkcolor}{HTML}{2a4f99}
+\newcommand{\gx}[1]{\textcolor{mygreen}{#1}}
+\newcommand{\bx}[1]{\textcolor{myblue}{#1}}
+\newcommand{\rx}[1]{\textcolor{myred}{#1}}
+\newcommand{\Gx}[1]{\textcolor{mygray}{#1}}
+
+% 
+% 
+% 
+
+%%%%% 目次
+\setcounter{tocdepth}{4}
+
+% 
+% 
+% 
+
+%%%%% ヘッダー／フッター／見出し
+\renewcommand{\plainifnotempty}{} % クラスファイルによるページスタイル強制変更を除去
+\usepackage[pagestyles, clearempty, toctitles, explicit]{titlesec}
+\newcommand{\headsize}{\small}
+
+\makeatletter
+\newcommand{\labelchapter}{\@chapapp \thechapter \@chappos}
+\newcommand{\labelsection}{\@secapp \thesection \@secpos}
+\makeatother
+
+%%% ヘッダー／フッター
+\newpagestyle{nc-ns}[\headsize\gs]{%
+  \headrule
+  \sethead[\textit{\thepage}][\labelchapter\quad\chaptertitle][]% 偶数ページ
+  {}{\labelsection\quad\sectiontitle}{\textit{\thepage}}% 奇数ページ
+}
+\newpagestyle{nc-s}[\headsize\gs]{%
+  \headrule
+  \sethead[\textit{\thepage}][\labelchapter\quad\chaptertitle][]% 偶数ページ
+  {}{\sectiontitle}{\textit{\thepage}}% 奇数ページ
+}
+\newpagestyle{nc-nc}[\headsize\gs]{%
+  \headrule
+  \sethead[\textit{\thepage}][\labelchapter\quad\chaptertitle][]% 偶数ページ
+  {}{\labelchapter\quad\chaptertitle}{\textit{\thepage}}% 奇数ページ
+}
+\newpagestyle{c-c}[\headsize\gs]{%
+  \headrule
+  \sethead[\textit{\thepage}][\chaptertitle][]% 偶数ページ
+  {}{\chaptertitle}{\textit{\thepage}}% 奇数ページ
+}
+
+%%% 見出し
+\titleformat{\chapter}[display]{\thispagestyle{empty}\filleft\gsb}{\fontsize{80}{0}\selectfont\thechapter}{20pt}{\huge #1}
+\titlespacing*{\chapter}{0pt}{50pt}{40pt}
+
+\titleformat{\section}[display]{\gs}{\large\labelsection\hspace{.5em}\titlerule}{3pt}{\Large #1}
+\titleformat{name=\section,numberless}{\gs\Large}{}{0em}{#1\hspace{.5em}\titlerule}
+\titlespacing*{\section}{0pt}{15pt}{10pt}
+\titlespacing*{name=\section,numberless}{0pt}{15pt}{10pt}
+
+\titleformat{\subsection}{\gs\large}{\thesubsection}{1em}{#1}
+
+\renewcommand{\jsParagraphMark}{}
+
+\newcommand{\separator}{\begin{center}◇\qquad ◇\qquad ◇\end{center}}
+
+% 
+% 
+% 
+
+%%%%% ハイパーリンク
+\usepackage{hyperref}
+\hypersetup{setpagesize=false, bookmarksdepth=4, bookmarksnumbered=true, colorlinks=true, linkcolor=mylinkcolor, citecolor=mylinkcolor, urlcolor=myurlcolor, pdfauthor={鴎海}}
+\newcommand{\phantomlabel}[1]{\phantomsection\label{#1}}
+\newcommand{\phyperref}[2]{\hyperref[#1]{#2\textsuperscript{→p.\,\pageref*{#1}}}}
+
+% 
+% 
+% 
+
+%%%%% cref
+\usepackage[nameinlink]{cleveref}
+\crefname{page}{p.}{pp.}
+\makeatletter
+\crefformat{chapter}{#2\@chapapp #1\@chappos #3}
+\makeatother
+\crefformat{section}{#2\S #1#3}
+\crefformat{subsection}{#2\S\S #1#3}
+\crefname{equation}{式}{式}
+\creflabelformat{equation}{#2(#1)#3}
+% \crefname{figure}{図}{図}
+% \crefname{table}{表}{表}
+
+% 
+% 
+% 
+
+%%%%% zref
+\usepackage{zref-xr}
+\zxrsetup{toltxlabel}
+
+% 
+% 
+% 
+
+%%%%% リスト
+\usepackage{tasks}
+\usepackage[inline]{enumitem}
+\setlist{topsep=1ex}
+% - - - - - - - - - -
+\newlist{myenum}{enumerate}{1}
+\setlist[myenum]{label=(\roman*), ref=(\roman*)}
+\newlist{myenum*}{enumerate*}{1}
+\setlist[myenum*]{label=(\roman*), ref=(\roman*)}
+% - - - - - - - - - -
+\newlist{thmlist}{enumerate}{3}
+\setlist[thmlist, 1]{label=\arabic{thmlisti}., ref=\arabic{thmlisti}, noitemsep, leftmargin=*}
+\setlist[thmlist, 2]{label=\arabic{thmlisti}.\arabic{thmlistii}., ref=\arabic{thmlisti}.\arabic{thmlistii}., noitemsep}
+\setlist[thmlist, 3]{label=\arabic{thmlisti}.\arabic{thmlistii}.\arabic{thmlistiii}., ref=\arabic{thmlisti}.\arabic{thmlistii}.\arabic{thmlistiii}., noitemsep}
+\makeatletter
+\renewcommand{\p@thmlisti}{\perh@ps{\thetcbcounter.}}
+\protected\def\perh@ps#1{#1}
+\newcommand{\itemref}[1]{\begingroup\let\perh@ps\@gobble\ref{#1}\endgroup}
+\makeatother
+% - - - - - - - - - -
+\newlist{step}{enumerate}{3}
+\setlist[step, 1]{label=(\arabic{stepi}), ref=(\arabic{stepi}), noitemsep, leftmargin=*}
+\setlist[step, 2]{label=(\arabic{stepi}.\arabic{stepii}), ref=(\arabic{stepi}.\arabic{stepii}), noitemsep, leftmargin=*}
+\setlist[step, 3]{label=(\arabic{stepi}.\arabic{stepii}.\arabic{stepiii}), ref=(\arabic{stepi}.\arabic{stepii}.\arabic{stepiii}), noitemsep, leftmargin=*}
+% - - - - - - - - - -
+\newlist{exc}{enumerate}{1}
+\setlist[exc]{label=問\arabic*., ref=\arabic*}
+\crefname{exci}{問}{問}
+% - - - - - - - - - -
+% descriptionのitemへのリンク
+\makeatletter
+\NewDocumentCommand\itemlab{mmO{}}{
+  \item[#1]
+  \phantomsection
+  \ifstrempty{#3}{\renewcommand{\@currentlabel}{#1}}{\renewcommand{\@currentlabel}{#3}}
+  \label{#2}
+}
+\makeatother
+
+\usepackage{tabto}
+
+% 
+% 
+% 
+
+%%%%% tcolorbox
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+\tcbsetforeverylayer{myitm/.style={%
+  enhanced,
+  breakable,
+  colbacklower=white, coltitle=white, skin=bicolor,
+  fonttitle=\gsb,
+  boxrule=1pt,
+  sharp corners,
+}}
+\NewTColorBox[auto counter, number within=section]{none}{}{}
+\NewDocumentCommand{\defitem}{mmmm}{%
+  \crefname{thmlist#1}{#2}{#2}
+  \NewTColorBox[use counter from=none, crefname={#2}{#2}]{#1}{O{}O{}O{}}{%
+    myitm,
+    colframe=#3, colback=#3!10!white,
+    title={#2\thetcbcounter\ifstrempty{##3}{}{（##3）}},
+    label={\ifstrempty{##1}{item_\thetcbcounter}{##1}},
+    nameref={\ifstrempty{##2}{##3}{##2}},
+    before upper={\crefalias{thmlisti}{thmlist#1}},
+    after upper={\labellist{##1}},
+    before lower={{\gsb #4:}\hspace{1em}},%
+  }%
+}
+\newcommand{\tcbex}{{\gsb 例:}\hspace{1em}}
+\defitem{rgl}{規約}{myblue}{例}
+\defitem{dfn}{定義}{myblue}{例}
+\defitem{mdfn}{メタ定義}{myblue}{例}
+\defitem{lem}{補題}{mygreen}{証明}
+\defitem{prp}{命題}{mygreen}{証明}
+\defitem{mthm}{メタ定理}{mygreen}{証明}
+\defitem{thm}{定理}{mygreen}{証明}
+\defitem{asm}{前提}{myred}{例}
+\defitem{axm}{公理}{myred}{例}
+\defitem{cnv}{約束}{mygray}{例}
+
+% 注意
+\NewTColorBox{nb}{O{}}{%
+  enhanced,
+  breakable,
+  colframe=black, colback=white, coltitle=black, colbacktitle=white,
+  borderline={.7pt}{0pt}{dashed},
+  frame hidden,
+  attach boxed title to top text left={yshift*=-\tcboxedtitleheight/2},
+  boxed title style={tile}, boxed title size=title,
+  title={\gs 注意\ifstrempty{#1}{}{（#1）}},
+}
+
+\makeatletter
+\newcommand{\setlabelname}[1]{\protected@edef\@currentlabelname{#1}}
+\makeatother
+\ExplSyntaxOn
+\seq_new:N \g_my_labellist_seq
+\NewDocumentCommand { \mylabel } { mO{} } {
+  \tl_if_blank:nTF { #2 } {} { \setlabelname{#2} }
+  \label{#1}
+  \seq_gput_right:Nn \g_my_labellist_seq { #1 }
+}
+\NewDocumentCommand { \labellist } { m } {
+  \group_begin:
+  \footnotesize
+  \tl_if_blank:nTF { #1 } {} {
+    \hfill ---\ label:\ \texttt{#1}
+  }
+  \seq_if_empty:NTF \g_my_labellist_seq {} {
+    \tl_if_blank:nTF { #1 } {} { \\ }
+    \hfill ---\ label:\
+    \seq_set_map:NNn \l_tmpa_seq \g_my_labellist_seq { \texttt{##1} }
+    \seq_use:Nn \l_tmpa_seq { \\ \hfill }
+  }
+  \seq_gclear:N \g_my_labellist_seq
+  \group_end:
+}
+\ExplSyntaxOff
+\ifbool{BoolUseLabellist}{}{
+  \RenewDocumentCommand{\mylabel}{mO{}}{\label{#1}}
+  \renewcommand{\labellist}[1]{}
+}
+
+
+% 
+% 
+% 
+
+%%%%% 表など
+\usepackage{xltabular}
+\usepackage{booktabs}
+
+% 
+% 
+% 
+
+%%%%% TikZ
+% \usetikzlibrary{}
+
+% 
+% 
+% 
+
+%%%%% 索引
+\ExplSyntaxOn
+\keys_define:nn { idx } {
+  parent .tl_set:N = \l_idx_parent_tl,
+  parent-sort .tl_set:N = \l_idx_parentsort_tl,
+  real .tl_set:N = \l_idx_real_tl
+}
+\NewDocumentCommand { \idx } { mmO{}O{} } {
+  \group_begin:
+  \keys_set:nn { idx } { #4 }
+  \tl_if_empty:NTF \l_idx_parent_tl {
+    \index{#2@#1}
+  } {
+    \index{\l_idx_parentsort_tl@\l_idx_parent_tl!#2@#1}
+  }
+  \tl_if_empty:NTF \l_idx_real_tl {
+    \textsf{#1}
+  } {
+    \textsf{\l_idx_real_tl}
+  }
+  \tl_if_empty:nTF { #3 } {} { （#3） }
+  \group_end:
+}
+\ExplSyntaxOff
+
+\ifbool{BoolUseIndex}{
+  \usepackage{makeidx}
+  \makeindex
+}{
+  \newcommand{\printindex}{}
+  \RenewDocumentCommand{\idx}{mmO{}O{}}{\textsf{#1}\ifstrempty{#3}{}{（#3）}}
+}
+
+% 
+% 
+% 
+
+%%%%% 参考文献
+\ifbool{BoolUseBib}{
+  \usepackage[style=authoryear, backend=biber]{biblatex}
+  \addbibresource{biblio.bib}
+  \DeclareNameAlias{default}{family-given}
+  \newcommand{\myprintbibliography}{
+    \nocite{*}
+    \printbibliography[title=参考文献, label=biblio]
+  }
+}{
+  \newcommand{\myprintbibliography}{}
+}
+
+% 
+% 
+% 
+
+%%%%% グロッサリー
+\ifbool{BoolUseGls}{%
+  \usepackage[record]{glossaries-extra}
+  \GlsXtrLoadResources[src=symbols, set-widest, sort=use]
+  \newcommand{\myprintglossary}{\printunsrtglossary[style=symbol-list]}
+  \newglossarystyle{symbol-list}{%
+    \renewenvironment{theglossary}{%
+      \begin{longtable}[l]{@{}cll@{}}
+    }{%
+      \end{longtable}
+    }
+    \renewcommand*{\glossaryheader}{%
+      \toprule
+      {\gs 記号} & {\gs 説明} & {\gs 項目} \\
+      \midrule
+      \endfirsthead
+      \toprule
+      {\gs 記号} & {\gs 説明} & {\gs 項目} \\
+      \midrule
+      \endhead
+      \bottomrule
+      \endfoot
+      \bottomrule
+      \endlastfoot
+    }
+    \renewcommand*{\glossentry}[2]{%
+      \glossentrysymbol{##1} & \glossentrydesc{##1} & \glstarget{##1}{\glossentryname{##1}} \tabularnewline
+    }
+    \renewcommand*{\glossarytitle}{記号一覧}
+    \renewcommand*{\glossarytoctitle}{記号一覧}
+  }
+}{
+  \newcommand{\glsadd}[1]{}
+  \newcommand{\myprintglossary}{}
+}
+
+% 
+% 
+% 
+
+%%%%% 数式
+\everymath=\expandafter{\the\everymath \narrowbaselines\displaystyle}
