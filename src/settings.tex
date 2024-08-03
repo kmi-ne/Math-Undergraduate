@@ -164,17 +164,17 @@
 %%%%% リスト
 \usepackage{tasks}
 \usepackage[inline]{enumitem}
-\setlist{topsep=1ex}
+\setlist{align=left, leftmargin=*}
 % - - - - - - - - - -
 \newlist{myenum}{enumerate}{3}
-\setlist[myenum, 1]{label=(\roman{myenumi}), ref=(\roman{myenumi}), leftmargin=*}
-\setlist[myenum, 2]{label=(\roman{myenumi}.\roman{myenumii}), ref=(\roman{myenumi}.\roman{myenumii}), leftmargin=*}
-\setlist[myenum, 3]{label=(\roman{myenumi}.\roman{myenumii}.\roman{myenumiii}), ref=(\roman{myenumi}.\roman{myenumii}.\roman{myenumiii}), leftmargin=*}
+\setlist[myenum, 1]{label=(\roman{myenumi}), ref=(\roman{myenumi})}
+\setlist[myenum, 2]{label=(\roman{myenumi}.\roman{myenumii}), ref=(\roman{myenumi}.\roman{myenumii})}
+\setlist[myenum, 3]{label=(\roman{myenumi}.\roman{myenumii}.\roman{myenumiii}), ref=(\roman{myenumi}.\roman{myenumii}.\roman{myenumiii})}
 \newlist{myenum*}{enumerate*}{1}
 \setlist[myenum*]{label=(\roman*), ref=(\roman*)}
 % - - - - - - - - - -
 \newlist{thmlist}{enumerate}{3}
-\setlist[thmlist, 1]{label=\arabic{thmlisti}., ref=\arabic{thmlisti}, leftmargin=*}
+\setlist[thmlist, 1]{label=\arabic{thmlisti}., ref=\arabic{thmlisti}}
 \setlist[thmlist, 2]{label=\arabic{thmlisti}.\arabic{thmlistii}., ref=\arabic{thmlisti}.\arabic{thmlistii}.}
 \setlist[thmlist, 3]{label=\arabic{thmlisti}.\arabic{thmlistii}.\arabic{thmlistiii}., ref=\arabic{thmlisti}.\arabic{thmlistii}.\arabic{thmlistiii}.}
 \makeatletter
@@ -184,9 +184,9 @@
 \makeatother
 % - - - - - - - - - -
 \newlist{step}{enumerate}{3}
-\setlist[step, 1]{label=(\arabic{stepi}), ref=(\arabic{stepi}), leftmargin=*}
-\setlist[step, 2]{label=(\arabic{stepi}.\arabic{stepii}), ref=(\arabic{stepi}.\arabic{stepii}), leftmargin=*}
-\setlist[step, 3]{label=(\arabic{stepi}.\arabic{stepii}.\arabic{stepiii}), ref=(\arabic{stepi}.\arabic{stepii}.\arabic{stepiii}), leftmargin=*}
+\setlist[step, 1]{label=(\arabic{stepi}), ref=(\arabic{stepi})}
+\setlist[step, 2]{label=(\arabic{stepi}.\arabic{stepii}), ref=(\arabic{stepi}.\arabic{stepii})}
+\setlist[step, 3]{label=(\arabic{stepi}.\arabic{stepii}.\arabic{stepiii}), ref=(\arabic{stepi}.\arabic{stepii}.\arabic{stepiii})}
 % - - - - - - - - - -
 \newlist{exc}{enumerate}{1}
 \setlist[exc]{label=問\arabic*., ref=\arabic*}
