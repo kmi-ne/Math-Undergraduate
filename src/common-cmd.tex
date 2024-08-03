@@ -1,39 +1,55 @@
 \makeatletter
+
+% - - - 以下，シンタックスハイライト対策のために変な書き方にしています
+\def\mydoller{$}\def\mydoller{$}
 % 環境
 \ExplSyntaxOn
-\tl_new:N \g_my_OutsideEq_tl
-\tl_gset:Nn \g_my_OutsideEq_tl { T }
+\bool_set_true:N \g_my_OutsideEq_bool
 \tl_new:N \g_my_EqType_tl
 \NewDocumentCommand { \? } { O{} } {
-  \tl_if_eq:NnTF \g_my_OutsideEq_tl { T } {
+  \bool_if:NTF \g_my_OutsideEq_bool {
     \tl_if_empty:nTF { #1 } {
-      \hfill$\begin{aligned}[t]
-      \tl_gset:Nn \g_my_EqType_tl { at }
+      \csname [\endcsname
+      \tl_gset:Nn \g_my_EqType_tl { e }
     } {
+      \tl_if_eq:nnTF { #1 } { t } {
+        \hfill\mydoller
+        \begin {aligned}[t]
+        \tl_gset:Nn \g_my_EqType_tl { t }
+      }
       \tl_if_eq:nnTF { #1 } { a } {
-        \[\begin{aligned}
+        \csname [\endcsname
+        \begin {aligned}
         \tl_gset:Nn \g_my_EqType_tl { a }
       } {}
       \tl_if_eq:nnTF { #1 } { g } {
-        \[\begin{gathered}
+        \csname [\endcsname
+        \begin {gathered}
         \tl_gset:Nn \g_my_EqType_tl { g }
       } {}
     }
-    \tl_gset:Nn \g_my_OutsideEq_tl { F }
+    \bool_set_false:N \g_my_OutsideEq_bool
   } {
-    \tl_if_eq:NnTF \g_my_EqType_tl { at } {
-      \end{aligned}$\hfill\null
+    \tl_if_eq:NnTF \g_my_EqType_tl { e } {
+      \csname ]\endcsname
+    } {}
+    \tl_if_eq:NnTF \g_my_EqType_tl { t } {
+      \end {aligned}
+      \mydoller\hfill\null
     } {}
     \tl_if_eq:NnTF \g_my_EqType_tl { a } {
-      \end{aligned}\]
+      \end {aligned}
+      \csname ]\endcsname
     } {}
     \tl_if_eq:NnTF \g_my_EqType_tl { g } {
-      \end{gathered}\]
+      \end {gathered}
+      \csname ]\endcsname
     } {}
-    \tl_gset:Nn \g_my_OutsideEq_tl { T }
+    \bool_set_true:N \g_my_OutsideEq_bool
   }
 }
 \ExplSyntaxOff
+% - - - 変な書き方終了
 
 
 % テキスト書体コマンド
@@ -91,17 +107,16 @@
 
 
 % 両側デリミタ
-\ifluatex
-  \newcommand{\pr}[1]{\lleft(#1\rright)}
-  \newcommand{\cb}[1]{\lleft\{#1\rright\}}
-  \newcommand{\⟨}{\lleft\langle}
-  \newcommand{\⟩}{\rright\rangle}
-\else
-  \newcommand{\pr}[1]{\left(#1\right)}
-  \newcommand{\cb}[1]{\left\{#1\right\}}
-  \newcommand{\⟨}{\left\langle}
-  \newcommand{\⟩}{\right\rangle}
-\fi
+\ifxetex
+  \newcommand{\lleft}{\left}
+  \newcommand{\rright}{\right}
+  \newcommand{\mmrel}{\middle}
+\else\fi
+
+\newcommand{\pr}[1]{\lleft(#1\rright)}
+\newcommand{\cb}[1]{\lleft\{#1\rright\}}
+\newcommand{\⟨}{\lleft\langle}
+\newcommand{\⟩}{\rright\rangle}
 
 
 % 片側デリミタ
