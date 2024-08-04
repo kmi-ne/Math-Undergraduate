@@ -313,34 +313,41 @@
 
 %%%%% 索引
 \ExplSyntaxOn
-\keys_define:nn { idx } {
-  parent .tl_set:N = \l_idx_parent_tl,
-  parent-sort .tl_set:N = \l_idx_parentsort_tl,
-  real .tl_set:N = \l_idx_real_tl
-}
-\NewDocumentCommand { \idx } { mmO{}O{} } {
-  \group_begin:
-  \keys_set:nn { idx } { #4 }
-  \tl_if_empty:NTF \l_idx_parent_tl {
-    \index{#2@#1}
-  } {
-    \index{\l_idx_parentsort_tl@\l_idx_parent_tl!#2@#1}
-  }
-  \tl_if_empty:NTF \l_idx_real_tl {
-    \textsf{#1}
-  } {
-    \textsf{\l_idx_real_tl}
-  }
-  \tl_if_empty:nTF { #3 } {} { （#3） }
-  \group_end:
-}
-
 \bool_if:NTF \g_my_UseIndex_bool {
+  \keys_define:nn { idx } {
+    child .tl_set:N = \l_idx_child_tl,
+    child-sort .tl_set:N = \l_idx_childsort_tl,
+    entry .tl_set:N = \l_idx_entry_tl,
+    entry-sort .tl_set:N = \l_idx_entrysort_tl
+  }
+  \NewDocumentCommand { \idx } { mmO{}O{} } {
+    \group_begin:
+    \keys_set:nn { idx } { #4 }
+    \textsf{#1}
+    \tl_if_empty:nTF { #3 } {} { （#3） }
+    \tl_if_empty:NTF \l_idx_child_tl {
+      \tl_if_empty:NTF \l_idx_entry_tl {
+        \index{#2@#1}
+      } {
+        \index{\l_idx_entrysort_tl@l_idx_entry_tl}
+      }
+    } {
+      \tl_if_empty:NTF \l_idx_entry_tl {
+        \index{#2@#1!\l_idx_childsort_tl@\l_idx_child_tl}
+      } {
+        \index{\l_idx_entrysort_tl@l_idx_entry_tl!\l_idx_childsort_tl@\l_idx_child_tl}
+      }
+    }
+    \group_end:
+  }
   \usepackage{makeidx}
   \makeindex
 } {
-  \newcommand{\printindex}{}
-  \RenewDocumentCommand{\idx}{mmO{}O{}}{\textsf{#1}\ifstrempty{#3}{}{（#3）}}
+  \newcommand { \printindex } {}
+  \NewDocumentCommand { \idx } { mmO{}O{} } {
+    \textsf{#1}
+    \tl_if_empty:nTF { #3 } {} { （#3） }
+  }
 }
 \ExplSyntaxOff
 
