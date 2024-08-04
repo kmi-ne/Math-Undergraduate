@@ -6,5 +6,6 @@
 !*.latexmkrc
 !*.md
 !*.pdf
+!*.sh
 !*.sty
 !*.tex
