@@ -94,7 +94,7 @@
 % 非記号系コマンド
 
 
-% 記号タイプ
+% 数式クラスとオペレーター
 \def\opr{\@ifstar\@opr\@@opr}
 \def\@opr#1{\operatorname{#1}}
 \def\@@opr#1{\operatorname*{#1}}
@@ -112,11 +112,15 @@
   \newcommand{\rright}{\right}
   \newcommand{\mmrel}{\middle}
 \else\fi
-
-\newcommand{\pr}[1]{\lleft(#1\rright)}
-\newcommand{\cb}[1]{\lleft\{#1\rright\}}
+\newcommand{\（}{\lleft(}
+\newcommand{\）}{\rright)}
+\newcommand{\pr}[1]{\lleft( #1 \rright)}
+\newcommand{\｛}{\lleft\{}
+\newcommand{\｝}{\rright\}}
+\newcommand{\cb}[1]{\lleft\{ #1 \rright\}}
 \newcommand{\⟨}{\lleft\langle}
 \newcommand{\⟩}{\rright\rangle}
+\newcommand{\ab}[1]{\lleft\langle #1 \rright\rangle}
 
 
 % 片側デリミタ
