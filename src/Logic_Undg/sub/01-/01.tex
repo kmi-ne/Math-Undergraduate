@@ -1,0 +1,65 @@
+\section{メタ言語と対象言語}
+
+
+
+\begin{rgl}[dfn_shape]
+  \idx{図形}{ずけい}[shape]とは，紙などの媒体上に描画される，視覚的に認識可能な形状をいう．以下，任意の図形を，大文字または小文字ラテン文字の筆記体（$𝒜, \… , 𝒵, 𝒶, \… , 𝓏$）で表す．
+\end{rgl}
+
+
+
+\begin{rgl}
+  \begin{thmlist}
+    \item \mylabel{dfn_sameShape}
+    図形$𝒳$と図形$𝒴$が\idx{同じである}{おなじである}[same][parent={図形が}, parent-sort={ずけいが}]とは，$𝒳$と$𝒴$が同じ形状であることをいい，$𝒳 ≡ 𝒴$と書かれる．
+    \item \mylabel{dfn_differentShape}
+    図形$𝒳$と図形$𝒴$が\idx{異なる}{ことなる}[different][parent={図形が}, parent-sort={ずけいが}]とは，$𝒳$と$𝒴$が同じでないことをいい，$𝒳 ≢ 𝒴$と書かれる．
+  \end{thmlist}
+\end{rgl}
+
+
+
+\begin{rgl}[dfn_language]
+  \idx{言語}{げんご}[language]$L$は，以下によって特徴づけられる．
+  \begin{thmlist}
+    \item \mylabel{dfn_alphabet}
+    言語$L$に応じて図形がいくつか選ばれ，それらは$L$の\idx{アルファベット}{あるふぁべっと}[alphabet]と呼ばれる．なお，どの図形を$L$のアルファベットとして選ぶかは$L$に依存し，その選び方は明示される場合もされない場合もある．
+  \end{thmlist}
+  以下，任意の言語を$L$や$M$などで表す．
+\end{rgl}
+
+
+
+\begin{rgl}[dfn_expression]
+  図形$𝒳$が言語$L$に属する\idx{表現}{ひょうげん}[expression]であるということを，以下の条件によって定める．
+  \begin{myenum}
+    \item $L$のアルファベットは$L$に属する表現である．
+    \item 図形$𝒴$が$L$に属する表現であり，図形$𝒶$が$L$のアルファベットであれば，$𝒴$の右に$𝒶$を描画してできる図形$𝒴𝒶$は$L$に属する表現である．
+    \item 図形$𝒳$が$L$に属する表現であれば，以下のいずれかが成り立つ．
+    \begin{myenum}
+      \item $𝒳$は$L$のアルファベットである．
+      \item $𝒳 ≡ 𝒴𝒶$であるような，$L$に属する表現$𝒴$と，$L$のアルファベット$𝒶$が存在する．
+    \end{myenum}
+  \end{myenum}
+  $𝒳$が$L$に属する表現であるということを，$𝒳 : \Expr L$と書く．
+\end{rgl}
+
+
+
+\begin{rgl}
+  \begin{thmlist}
+    \item \mylabel{dfn_correspondence}
+    単に\idx{対応}{たいおう}[correspondence]というとき，それはある図形に対して，ある図形を一つだけ対応させることをいう．図形$𝒳$を図形$𝒴$に対応させる対応を，$𝒳 ⥛ 𝒴$と書く．
+    \item \mylabel{dfn_assignment}
+    \idx{割り当て}{わりあて}[assignment]とは，いくつかの対応の集まりをいう．
+  \end{thmlist}
+\end{rgl}
+
+
+
+\begin{rgl}[dfn_naming]
+  $L$，$M$を言語とする．$M$による$L$への\idx{名付け}{なづけ}[naming]とは，以下を満たす対応$𝒳 ⥛ 𝒴$全体からなる対応をいう．
+  \begin{myenum}
+    \item $𝒳 : \Expr L$かつ$𝒴 : \Expr M$
+  \end{myenum}
+\end{rgl}
