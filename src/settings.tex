@@ -286,8 +286,8 @@
     \group_end:
   }
 } {
-  \RenewDocumentCommand{\mylabel}{mO{}}{\label{#1}}
-  \renewcommand{\labellist}[1]{}
+  \NewDocumentCommand { \mylabel } { mO{} } { \label{#1} }
+  \NewDocumentCommand { \labellist } { m } {}
 }
 \ExplSyntaxOff
 
