@@ -1,15 +1,9 @@
-\newcommand{\newbooleanset}[2]{\newbool{#1}\setbool{#1}{#2}}
-\mybools
-
-% 
-% 
-% 
-
 %%%%% ページレイアウト
 % \setpagelayout+{vmargin=10truemm, inner=15truemm, outer=10truemm, includemp, marginparwidth=35truemm}
-\setpagelayout+{vmargin=10truemm, hmargin=10truemm, includemp, nomarginpar}
+\setpagelayout+{vmargin=8truemm, hmargin=10truemm, includemp, nomarginpar}
 % \usepackage{marginnote}
 % \renewcommand*{\marginfont}{\scriptsize}
+\allowdisplaybreaks[4]
 
 % 
 % 
@@ -44,7 +38,6 @@
   \immediate\write\@auxout{\catcode`_=12 }
 }
 \makeatother
-\allowdisplaybreaks[4]
 
 % 
 % 
@@ -121,6 +114,15 @@
 \renewcommand{\jsParagraphMark}{}
 
 \usepackage{froufrou}
+
+%%% 章末問題
+\newcommand{\exercises}{
+  \pagestyle{nc-s}
+  \sectionmark{章末問題}
+  \phantomsection
+  \section*{章末問題}
+  \addcontentsline{toc}{section}{章末問題}
+}
 
 % 
 % 
@@ -261,32 +263,33 @@
 \newcommand{\setlabelname}[1]{\protected@edef\@currentlabelname{#1}}
 \makeatother
 \ExplSyntaxOn
-\seq_new:N \g_my_labellist_seq
-\NewDocumentCommand { \mylabel } { mO{} } {
-  \tl_if_blank:nTF { #2 } {} { \setlabelname{#2} }
-  \label{#1}
-  \seq_gput_right:Nn \g_my_labellist_seq { #1 }
-}
-\NewDocumentCommand { \labellist } { m } {
-  \group_begin:
-  \footnotesize
-  \tl_if_blank:nTF { #1 } {} {
-    \hfill ---\ label:\ \texttt{#1}
+\bool_if:NTF \g_my_UseLabelList_bool {
+  \seq_new:N \g_my_labellist_seq
+  \NewDocumentCommand { \mylabel } { mO{} } {
+    \tl_if_blank:nTF { #2 } {} { \setlabelname{#2} }
+    \label{#1}
+    \seq_gput_right:Nn \g_my_labellist_seq { #1 }
   }
-  \seq_if_empty:NTF \g_my_labellist_seq {} {
-    \tl_if_blank:nTF { #1 } {} { \\ }
-    \hfill ---\ label:\
-    \seq_set_map:NNn \l_tmpa_seq \g_my_labellist_seq { \texttt{##1} }
-    \seq_use:Nn \l_tmpa_seq { \\ \hfill }
+  \NewDocumentCommand { \labellist } { m } {
+    \group_begin:
+    \footnotesize
+    \tl_if_blank:nTF { #1 } {} {
+      \hfill ---\ label:\ \texttt{#1}
+    }
+    \seq_if_empty:NTF \g_my_labellist_seq {} {
+      \tl_if_blank:nTF { #1 } {} { \\ }
+      \hfill ---\ label:\
+      \seq_set_map:NNn \l_tmpa_seq \g_my_labellist_seq { \texttt{##1} }
+      \seq_use:Nn \l_tmpa_seq { \\ \hfill }
+    }
+    \seq_gclear:N \g_my_labellist_seq
+    \group_end:
   }
-  \seq_gclear:N \g_my_labellist_seq
-  \group_end:
-}
-\ExplSyntaxOff
-\ifbool{BoolUseLabellist}{}{
+} {
   \RenewDocumentCommand{\mylabel}{mO{}}{\label{#1}}
   \renewcommand{\labellist}[1]{}
 }
+\ExplSyntaxOff
 
 
 % 
@@ -331,22 +334,23 @@
   \tl_if_empty:nTF { #3 } {} { （#3） }
   \group_end:
 }
-\ExplSyntaxOff
 
-\ifbool{BoolUseIndex}{
+\bool_if:NTF \g_my_UseIndex_bool {
   \usepackage{makeidx}
   \makeindex
-}{
+} {
   \newcommand{\printindex}{}
   \RenewDocumentCommand{\idx}{mmO{}O{}}{\textsf{#1}\ifstrempty{#3}{}{（#3）}}
 }
+\ExplSyntaxOff
 
 % 
 % 
 % 
 
 %%%%% 参考文献
-\ifbool{BoolUseBib}{
+\ExplSyntaxOn
+\bool_if:NTF \g_my_UseBib_bool {
   \usepackage[style=authoryear, backend=biber]{biblatex}
   \addbibresource{biblio.bib}
   \DeclareNameAlias{default}{family-given}
@@ -354,21 +358,23 @@
     \nocite{*}
     \printbibliography[title=参考文献, label=biblio]
   }
-}{
+} {
   \newcommand{\myprintbibliography}{}
 }
+\ExplSyntaxOff
 
 % 
 % 
 % 
 
 %%%%% グロッサリー
-\ifbool{BoolUseGls}{%
+\ExplSyntaxOn
+\bool_if:NTF \g_my_UseGls_bool {
   \usepackage[record]{glossaries-extra}
   \GlsXtrLoadResources[src=symbols, set-widest, sort=use]
   \newcommand{\myprintglossary}{\printunsrtglossary[style=symbol-list]}
-  \newglossarystyle{symbol-list}{%
-    \renewenvironment{theglossary}{%
+  \newglossarystyle{symbol-list}{
+    \renewenvironment{theglossary}{
       \begin{longtable}[l]{@{}cll@{}}
     }{%
       \end{longtable}
@@ -393,10 +399,11 @@
     \renewcommand*{\glossarytitle}{記号一覧}
     \renewcommand*{\glossarytoctitle}{記号一覧}
   }
-}{
+} {
   \newcommand{\glsadd}[1]{}
   \newcommand{\myprintglossary}{}
 }
+\ExplSyntaxOff
 
 % 
 % 
